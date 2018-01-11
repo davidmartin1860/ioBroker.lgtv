@@ -31,13 +31,28 @@ function sendCommand(cmd, options, cb) {
 
 	lgtvobj.on('connect', function (error, response)
 	{
-		lgtvobj.request(cmd, options, function (_error, response)
-		{
-			if (_error)
-				adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
-			lgtvobj.disconnect();
-			cb && cb(_error, response);
-		});
+		switch (command) {
+			case 'button':
+				lgtvobj.getSocket(
+					'ssap://com.webos.service.networkinput/getPointerInputSocket',
+					function(err, sock) {
+							if (!err) {
+									sock.send('button', {name: "UP"});
+							}
+							cb && cb(err, "");
+					}
+				);
+			break;
+			default:
+				lgtvobj.request(cmd, options, function (_error, response)
+				{
+					if (_error)
+						adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
+					lgtvobj.disconnect();
+					cb && cb(_error, response);
+				});
+			break;
+		}
 	});
 }
 
@@ -120,41 +135,6 @@ function pollInput() {
 	});
 }
 
-function sendButton() {
-	var lgtvobj = new LGTV({
-		url: 		'ws://' + adapter.config.ip + ':3000',
-		timeout: 	adapter.config.timeout,
-		reconnect: 	false
-	});
-	lgtvobj.on('connecting', function (host)
-	{
-		adapter.log.debug('Connecting to WebOS TV: ' + host);
-	});
-
-	lgtvobj.on('prompt', function ()
-	{
-		adapter.log.debug('Waiting for pairing confirmation on WebOS TV ' + adapter.config.ip);
-	});
-
-	lgtvobj.on('error', function (error)
-	{
-		adapter.log.debug('Error on connecting or sending command to WebOS TV: ' + error);
-		cb && cb(error);
-	});
-
-	lgtvobj.on('connect', function (error, response)
-	{
-		lgtvobj.getSocket(
-	    'ssap://com.webos.service.networkinput/getPointerInputSocket',
-	    function(err, sock) {
-	        if (!err) {
-	            sock.send('button', {name: "UP"});
-	        }
-	    }
-		);
-	});
-}
-
 adapter.on('stateChange', function (id, state)
 {
     if (id && state && !state.ack)
@@ -171,10 +151,9 @@ adapter.on('stateChange', function (id, state)
 
 			case 'turnOff':
 				adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
-				/*sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
+				sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
 					if (!err) adapter.setState('turnOff', state.val, true);
-				});*/
-				sendButton();
+				});
 				break;
 
 			case 'mute':
@@ -282,6 +261,14 @@ adapter.on('stateChange', function (id, state)
 				adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://tv/switchInput', {inputId: state.val}, function (err, val) {
 					if (!err) adapter.setState('input', state.val, true);
+				});
+
+				break;
+
+			case 'button':
+				adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('button', {inputId: state.val}, function (err, val) {
+					if (!err) adapter.setState('button', state.val, true);
 				});
 
 				break;

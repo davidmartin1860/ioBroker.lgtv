@@ -169,6 +169,24 @@
           "write": true
         },
         "native": {}
+      },
+      {
+        "_id":  "button",
+        "type": "state",
+        "common": {
+          "name": "Click button",
+          "role": "state",
+          "type": "string",
+          "states": {
+            "UP": "Up",
+            "RIGHT": "Right",
+            "DOWN": "Down",
+            "LEFT": "Left",
+          },
+          "read": false,
+          "write": true
+        },
+        "native": {}
       }
     ]
 }
