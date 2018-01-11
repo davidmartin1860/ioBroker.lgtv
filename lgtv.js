@@ -121,14 +121,38 @@ function pollInput() {
 }
 
 function sendButton() {
-	lgtv.getSocket(
-    'ssap://com.webos.service.networkinput/getPointerInputSocket',
-    function(err, sock) {
-        if (!err) {
-            sock.send('button', {name: "UP"});
-        }
-    }
-	);
+	var lgtvobj = new LGTV({
+		url: 		'ws://' + adapter.config.ip + ':3000',
+		timeout: 	adapter.config.timeout,
+		reconnect: 	false
+	});
+	lgtvobj.on('connecting', function (host)
+	{
+		adapter.log.debug('Connecting to WebOS TV: ' + host);
+	});
+
+	lgtvobj.on('prompt', function ()
+	{
+		adapter.log.debug('Waiting for pairing confirmation on WebOS TV ' + adapter.config.ip);
+	});
+
+	lgtvobj.on('error', function (error)
+	{
+		adapter.log.debug('Error on connecting or sending command to WebOS TV: ' + error);
+		cb && cb(error);
+	});
+
+	lgtvobj.on('connect', function (error, response)
+	{
+		lgtvobj.getSocket(
+	    'ssap://com.webos.service.networkinput/getPointerInputSocket',
+	    function(err, sock) {
+	        if (!err) {
+	            sock.send('button', {name: "UP"});
+	        }
+	    }
+		);
+	});
 }
 
 adapter.on('stateChange', function (id, state)
