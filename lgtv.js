@@ -31,7 +31,7 @@ function sendCommand(cmd, options, cb) {
 
 	lgtvobj.on('connect', function (error, response)
 	{
-		switch (command) {
+		switch (cmd) {
 			case 'button':
 				lgtvobj.getSocket(
 					'ssap://com.webos.service.networkinput/getPointerInputSocket',
