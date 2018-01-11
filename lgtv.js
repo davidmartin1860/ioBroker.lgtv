@@ -44,8 +44,7 @@ function sendCommand(cmd, options, cb) {
 				);
 			break;
 			default:
-				lgtvobj.request(cmd, options, function (_error, response)
-				{
+				lgtvobj.request(cmd, options, function (_error, response) {
 					if (_error)
 						adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
 					lgtvobj.disconnect();
