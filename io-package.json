@@ -135,7 +135,7 @@
         "common": {
           "name": "Select input source",
           "role": "state",
-          "type": "number",
+          "type": "string",
           "states": {
             "AV_1": "AV_1",
             "SCART_1": "Scart",
@@ -155,15 +155,15 @@
         "common": {
           "name": "Launch app",
           "role": "state",
-          "type": "number",
+          "type": "string",
           "states": {
-            "livetv": "LiveTV",
-            "smartshare": "Smart share",
-            "tvuserguide": "TV User Guide",
-            "netflix": "Netflix",
-            "youtube": "You tube",
-      	    "prime": "Amazon Prime",
-      	    "amazon": "Amazon Prime Video"
+            "Live TV": "com.webos.app.livetv",
+            "Smart Share": "com.webos.app.smartshare",
+            "TV User Guide": "com.webos.app.tvuserguide",
+            "Netflix": "netflix",
+            "You Tube": "youtube.leanback.v4",
+      	    "Amazon Prime Video(lovefilm.de)": "lovefilm.de",
+      	    "Amazon Prime Video": "amazon"
           },
           "read": false,
           "write": true

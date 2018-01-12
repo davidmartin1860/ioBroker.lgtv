@@ -196,59 +196,10 @@ adapter.on('stateChange', function (id, state)
 
 			case 'launch':
 				adapter.log.debug('Sending launch command ' + state.val + ' to WebOS TV: ' + adapter.config.ip);
-				switch (state.val)
-				{
-					case 'livetv':
-						adapter.log.debug('Switching to LiveTV on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.livetv"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'smartshare':
-						adapter.log.debug('Switching to SmartShare App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'tvuserguide':
-						adapter.log.debug('Switching to TV Userguide App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'netflix':
-						adapter.log.debug('Switching to Netflix App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "netflix"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'youtube':
-						adapter.log.debug('Switching to Youtube App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "youtube.leanback.v4"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'prime':
-						adapter.log.debug('Switching to Amazon Prime App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "lovefilm.de"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					case 'amazon':
-						adapter.log.debug('Switching to Amazon Prime App on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/launch', {id: "amazon"}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
-					default:
-						adapter.log.debug(state.val + 'is not a launching app. Opening in Browser on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/open', {target: state.val}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true);
-						}
-					break;
+				adapter.log.debug('Switching to' + state.key +' on WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://system.launcher/launch', {id: state.val}), function (err, val) {
+					if (!err) adapter.setState('launch', state.val, true);
 				}
-				break;
-
 			case 'channel':
 				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
