@@ -181,7 +181,12 @@
             "UP": "Up",
             "RIGHT": "Right",
             "DOWN": "Down",
-            "LEFT": "Left"
+            "LEFT": "Left",
+            "HOME": "Home",
+            "MENU": "Menu",
+            "ENTER": "Enter",
+            "BACK": "Back",
+            "EXIT": "Exit"
           },
           "read": false,
           "write": true
