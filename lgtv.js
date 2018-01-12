@@ -266,7 +266,7 @@ adapter.on('stateChange', function (id, state)
 
 			case 'button':
 				adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
-				sendCommand('button', {inputId: state.val}, function (err, val) {
+				sendCommand('button', {name: state.val}, function (err, val) {
 					if (!err) adapter.setState('button', state.val, true);
 				});
 
