@@ -157,13 +157,13 @@
           "role": "state",
           "type": "string",
           "states": {
-            "Live TV": "com.webos.app.livetv",
-            "Smart Share": "com.webos.app.smartshare",
-            "TV User Guide": "com.webos.app.tvuserguide",
-            "Netflix": "netflix",
-            "You Tube": "youtube.leanback.v4",
-      	    "Amazon Prime Video(lovefilm.de)": "lovefilm.de",
-      	    "Amazon Prime Video": "amazon"
+            "com.webos.app.livetv": "Live TV",
+            "com.webos.app.smartshare": "Smart Share",
+            "com.webos.app.tvuserguide": "TV User Guide",
+            "netflix": "Netflix",
+            "youtube.leanback.v4": "You Tube",
+      	    "lovefilm.de": "Amazon Prime Video(lovefilm.de)",
+      	    "amazon": "Amazon Prime Video"
           },
           "read": false,
           "write": true
