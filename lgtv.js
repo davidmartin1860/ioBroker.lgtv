@@ -37,7 +37,7 @@ function sendCommand(cmd, options, cb) {
 					'ssap://com.webos.service.networkinput/getPointerInputSocket',
 					function(err, sock) {
 							if (!err) {
-									sock.send('button', {name: "UP"});
+									sock.send('button', options);
 							}
 							cb && cb(err, "");
 					}
