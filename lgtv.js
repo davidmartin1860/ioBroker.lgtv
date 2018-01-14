@@ -34,7 +34,7 @@ function sendCommand(cmd, options, cb) {
 					function(err, sock) {
 							if (!err) {
 								var buttonArray = options.split(",");
-								for (button in buttonArray) {
+								for (var button of buttonArray) {
 									sock.send('button', {name: button});
 								}
 							}
