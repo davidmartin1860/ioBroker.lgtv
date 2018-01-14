@@ -33,7 +33,10 @@ function sendCommand(cmd, options, cb) {
 					'ssap://com.webos.service.networkinput/getPointerInputSocket',
 					function(err, sock) {
 							if (!err) {
-								sock.send('button', options);
+								var buttonArray = options.split(",");
+								for (button in buttonArray) {
+									sock.send('button', {name: button});
+								}
 							}
 							lgtvobj.disconnect();
 							cb && cb(err, "");
@@ -204,8 +207,8 @@ adapter.on('stateChange', function (id, state) {
 					break;
 
 				case 'button':
-					adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
-					sendCommand('button', {name: state.val}, function (err, val) {
+					adapter.log.debug('Sending button event/s "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
+					sendCommand('button', state.val, function (err, val) {
 						if (!err) adapter.setState('button', state.val, true);
 					});
 
